@@ -1,24 +1,26 @@
-﻿namespace MauiToolkitFolderPickerSample;
+﻿using CommunityToolkit.Maui.Storage;
+
+namespace MauiToolkitFolderPickerSample;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
-
 	public MainPage()
 	{
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private async void OnCounterClicked(object sender, EventArgs e)
 	{
-		count++;
+		try
+		{
+			var folder = await FolderPicker.PickAsync(default);
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+			folderPath.Text = $"Name: {folder.Name} Path: {folder.Path}";
+		}
+		catch
+		{
+			// TODO Implement
+		}
 	}
 }
 
